@@ -33,18 +33,18 @@ type NavItem = {
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
-    name: "Dashboard",
-    // subItems: [{ name: "data", path: "/", pro: false }],
+    name: "Assign ",
+    subItems: [{ name: "list", path: "/", pro: false }],
   },
   {
     icon: <UserCircleIcon />,
-    name: "Featured Properties",
+    name: "Patients",
     subItems: [{ name: "Add", path: "/", pro: false }],
   },
   {
     icon:<ListIcon /> ,
-    name: "Verification Request",
-    // subItems: [{ name: "Agencies", path: "/admin/verification/agenciesVerification", pro: false },{ name: "Agent", path: "/admin/verification/agentVerification", pro: false }],
+    name: "Medications",
+    subItems: [{ name: "Add", path: "/admin/verification/agenciesVerification", pro: false },],
   },
 
   {

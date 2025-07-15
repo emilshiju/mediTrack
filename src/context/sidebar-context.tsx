@@ -1,6 +1,6 @@
 "use client";
 
-import { SidebarContextType } from "@/src/types/context/sidebar-type"
+import { SidebarContextType } from "@/src/types/context/sidebarType"
 ;
 
 import React, { createContext, useContext, useState, useEffect } from "react";

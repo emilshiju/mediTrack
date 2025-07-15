@@ -1,10 +1,12 @@
 "use client";
 import { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import { Pill } from 'lucide-react';
 import * as Yup from 'yup';
 import { MedicationType } from '@/src/types/components/medication/medication';
 import medicationSchema from '@/src/util/validations/medicationScehma';
+import { createMedicationApi } from '@/src/lib/api/client/medication/medicationHandler';
+import toast from 'react-hot-toast';
 
 
 
@@ -17,12 +19,35 @@ export default function MedicationForm() {
     frequency: ''
   };
 
-  const handleSubmit = async (values: MedicationType) => {
+  const handleSubmit = async (values: MedicationType, formikHelpers:FormikHelpers<MedicationType>) => {
     setIsSubmitting(true);
+    
+  
     try {
+
+      const response=await  createMedicationApi(values)
+
+      
+
+      if(response.success){
+        toast.success(response.message)
+        formikHelpers.resetForm()
+      }
+
+       if(!response.success){
+        toast.error(response.message)
+      }
+
+
       // Handle form submission here
       console.log(values);
-    } finally {
+    }catch(error){
+
+        console.log(error)
+        toast.error("something went wrong , try again later")
+      
+    }
+     finally {
       setIsSubmitting(false);
     }
   };

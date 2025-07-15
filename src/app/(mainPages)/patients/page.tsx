@@ -2,9 +2,11 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { UserPlus, Check } from 'lucide-react';
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import patientSchema from '@/src/util/validations/patientScehma';
 import { PatientType } from '@/src/types/components/patients/patients';
+import { createPatientApi } from '@/src/lib/api/client/patients/patientsHandler';
+import toast from 'react-hot-toast';
 
 export default function PatientForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -14,12 +16,31 @@ export default function PatientForm() {
     dateOfBirth: ''
   };
 
-  const handleSubmit = async (values: PatientType) => {
+  const handleSubmit = async (values: PatientType,formikHelpers:FormikHelpers<PatientType>) => {
     setIsSubmitting(true);
+
+   
     try {
+
+       const response =await  createPatientApi(values)
+
+       if(response.success){
+        toast.success(response.message)
+        formikHelpers.resetForm()
+      }
+
+       if(!response.success){
+        toast.error(response.message)
+      }
+
       // Handle form submission here
       console.log(values);
-    } finally {
+    }catch(error){
+      console.log(error)
+      toast.error("something went wrong , try again later")
+
+    } 
+    finally {
     //   setIsSubmitting(false);
     }
   };

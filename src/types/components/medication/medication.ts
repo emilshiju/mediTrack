@@ -5,12 +5,14 @@ export interface MedicationType  {
   frequency: string;
 };
 
-export interface resCreateMedicationType{
 
-  success: boolean;
-  data:any;
-  message: string;
-  statusCode: number;
-  timestamp: string;
-  
+
+
+
+export interface MedicationResType{
+ id: number;
+  name: string;
+  dosage: string;
+  frequency: string;
+  createdAt: string;
 }

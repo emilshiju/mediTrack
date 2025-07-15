@@ -8,7 +8,7 @@ const patientSchema = Yup.object({
   
   dateOfBirth: Yup.string()
   .required('Date of Birth is required')
-.test('valid-format', 'Please enter a valid date', (value) => {
+  .test('valid-format', 'Please enter a valid date', (value) => {
       if (!value) return false;
       // Accept either YYYY-MM-DD or DD-MM-YYYY
       return /^\d{4}-\d{2}-\d{2}$/.test(value) || /^\d{2}-\d{2}-\d{4}$/.test(value);

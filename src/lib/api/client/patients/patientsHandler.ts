@@ -8,7 +8,7 @@ export const createPatientApi=async(values:PatientType)=>{
 
     try{
 
-        const resCreatePatientApi:resCustomType=await axiosClient.post('/medications',values)
+        const resCreatePatientApi:resCustomType=await axiosClient.post('/patients',values)
 
 
         return {
@@ -33,5 +33,36 @@ export const createPatientApi=async(values:PatientType)=>{
                   message: data
                 };
     }
+
+}
+
+
+
+export const getAllPatientApi=async()=>{
+
+  try{
+
+    const resAllPatientApi:resCustomType=await axiosClient.get('/patients')
+
+    
+    return {
+          
+      success: resAllPatientApi.success,
+      data: resAllPatientApi.data,
+      message:resAllPatientApi.message,
+      statusCode:resAllPatientApi.statusCode,
+    
+        }
+
+
+  }catch(error){
+
+     const data=getApiErrorMessage(error)
+        
+                return {
+                  success:false,
+                  message: data
+                };
+  }
 
 }

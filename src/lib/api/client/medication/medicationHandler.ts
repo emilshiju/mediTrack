@@ -1,6 +1,6 @@
-import { getApiErrorMessage } from "@/src/types/api/resType"
+import { getApiErrorMessage, resCustomType } from "@/src/types/api/resType"
 import axiosClient from "../axiosClient"
-import { MedicationType, resCreateMedicationType } from "@/src/types/components/medication/medication"
+import { MedicationType } from "@/src/types/components/medication/medication"
 
 
 export const createMedicationApi=async(values:MedicationType)=>{
@@ -8,7 +8,7 @@ export const createMedicationApi=async(values:MedicationType)=>{
     try{
 
 
-        const resCreateMedicationApi:resCreateMedicationType = await axiosClient.post('/medications',values)
+        const resCreateMedicationApi:resCustomType= await axiosClient.post('/medications',values)
         
         return {
           
@@ -31,4 +31,38 @@ export const createMedicationApi=async(values:MedicationType)=>{
 
 
     }
+}
+
+
+
+export const getAllMedicationApi=async()=>{
+
+  try{
+
+
+    const resAllMedicationApi:resCustomType=await axiosClient.get('/medications')
+
+     return {
+          
+      success: resAllMedicationApi.success,
+      data:resAllMedicationApi.data,
+      message:resAllMedicationApi.message,
+      statusCode: resAllMedicationApi.statusCode,
+    
+        }
+
+
+
+
+  }catch(error){
+
+    const data=getApiErrorMessage(error)
+
+        return {
+          success:false,
+          message: data
+        };
+
+
+  }
 }

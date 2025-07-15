@@ -21,7 +21,7 @@ import { BoxCubeIcon,
 
  
 
-
+import { CalendarIcon, Pill, User, Clock, Calendar as CalendarDays } from "lucide-react";
 
 type NavItem = {
   name: string;
@@ -32,9 +32,9 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    icon: <GridIcon />,
-    name: "Assign ",
-    subItems: [{ name: "list", path: "/", pro: false }],
+    icon: <ListIcon />,
+    name: "assigned-medications ",
+    subItems: [{ name: "list", path: "/medication-assignments", pro: false },{ name: "Add", path: "/medication-assignments/add", pro: false }],
   },
   {
     icon: <UserCircleIcon />,
@@ -42,7 +42,7 @@ const navItems: NavItem[] = [
     subItems: [{ name: "Add", path: "/patients", pro: false }],
   },
   {
-    icon:<ListIcon /> ,
+    icon:<Pill /> ,
     name: "Medications",
     subItems: [{ name: "Add", path: "/medications", pro: false },],
   },

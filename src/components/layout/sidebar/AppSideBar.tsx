@@ -39,12 +39,12 @@ const navItems: NavItem[] = [
   {
     icon: <UserCircleIcon />,
     name: "Patients",
-    subItems: [{ name: "Add", path: "/", pro: false }],
+    subItems: [{ name: "Add", path: "/patients", pro: false }],
   },
   {
     icon:<ListIcon /> ,
     name: "Medications",
-    subItems: [{ name: "Add", path: "/admin/verification/agenciesVerification", pro: false },],
+    subItems: [{ name: "Add", path: "/medications", pro: false },],
   },
 
   {

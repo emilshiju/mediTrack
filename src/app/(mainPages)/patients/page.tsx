@@ -17,6 +17,7 @@ export default function PatientForm() {
   };
 
   const handleSubmit = async (values: PatientType,formikHelpers:FormikHelpers<PatientType>) => {
+    
     setIsSubmitting(true);
 
    
@@ -41,7 +42,7 @@ export default function PatientForm() {
 
     } 
     finally {
-    //   setIsSubmitting(false);
+      setIsSubmitting(false);
     }
   };
 

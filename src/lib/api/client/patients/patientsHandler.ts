@@ -40,6 +40,7 @@ export const createPatientApi=async(values:PatientType)=>{
 
 export const getAllPatientApi=async()=>{
 
+
   try{
 
     const resAllPatientApi:resCustomType=await axiosClient.get('/patients')

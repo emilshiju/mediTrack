@@ -5,7 +5,7 @@ import { medicationAssignFormValuesType } from "@/src/types/components/medicatio
 
 
 
-export const createMedicationAssign=async(values:medicationAssignFormValuesType)=>{
+export const createMedicationAssignApi=async(values:medicationAssignFormValuesType)=>{
 
     try{
 
@@ -25,9 +25,38 @@ export const createMedicationAssign=async(values:medicationAssignFormValuesType)
 
         const data=getApiErrorMessage(error)
                 
-                        return {
-                          success:false,
-                          message: data
-                        };
+          return { success:false, message: data };
     }
+}
+
+
+
+
+
+
+
+export const findAssignedMedicationsApi=async(id:string)=>{
+
+  try{
+
+    const resFindAssignedMedicationsApi:resCustomType=await axiosClient.get(`/medication-assign/patient/${id}`)
+
+
+     return {
+          
+      success:resFindAssignedMedicationsApi.success,
+      data:resFindAssignedMedicationsApi.data,
+      message:resFindAssignedMedicationsApi.message,
+      statusCode:resFindAssignedMedicationsApi.statusCode,
+    
+        }
+
+
+  }catch(error){
+
+          console.log(error)
+          const data=getApiErrorMessage(error)
+          return { success:false, message: data };
+  }
+
 }

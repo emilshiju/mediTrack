@@ -33,7 +33,7 @@ type NavItem = {
 const navItems: NavItem[] = [
   {
     icon: <ListIcon />,
-    name: "assigned-medications ",
+    name: "medication assignments",
     subItems: [{ name: "list", path: "/medication-assignments", pro: false },{ name: "Add", path: "/medication-assignments/add", pro: false }],
   },
   {

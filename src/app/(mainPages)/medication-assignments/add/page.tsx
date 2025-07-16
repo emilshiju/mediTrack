@@ -12,7 +12,8 @@ import { getAllPatientApi } from "@/src/lib/api/client/patients/patientsHandler"
 import { PatientResType } from "@/src/types/components/patients/patients";
 import { MedicationResType } from "@/src/types/components/medication/medication";
 import MedicationAssignSkeleton from "@/src/components/skeleton/MedicationAssignSkeleton";
-import { createMedicationAssign } from "@/src/lib/api/client/medicationAssign/medicationAssignHandler";
+import { createMedicationAssignApi } from "@/src/lib/api/client/medicationAssign/medicationAssignHandler";
+import toast from "react-hot-toast";
 
 // Define types
 interface Patient {
@@ -118,10 +119,19 @@ const MedicationAssignmentForm = () => {
 
     try{
 
-    createMedicationAssign(values)
+       const response=await createMedicationAssignApi(values)
+
+       if(response.success){
+        toast.success(response.message)
+       }
+
+       if(!response.success){
+        toast.error(response.message)
+       }
 
     }catch(error){
       console.log(error)
+      toast.error("something went wrong , try again later")
     }
     
 
@@ -132,7 +142,6 @@ const MedicationAssignmentForm = () => {
 
 
   
-
    
 
 

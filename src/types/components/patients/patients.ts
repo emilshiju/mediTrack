@@ -7,7 +7,7 @@ export interface PatientType {
 
 
 export interface PatientResType {
-  id: number;
+  id: string;
   name: string;
   dateOfBirth: string;
   createdAt: string;

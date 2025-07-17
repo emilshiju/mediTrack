@@ -70,6 +70,13 @@ export default function UserTable() {
     if(response.success){
       fetchAllPatient()
       toast.success(response.message)
+
+      const filteredData=allPatients.filter((a,b)=>{
+        if(a.id!==userId){
+          return a
+        }
+      })
+      setAllPatients(filteredData)
     }
 
     if(!response.success){
@@ -171,6 +178,13 @@ export default function UserTable() {
             </tbody>
           </table>
         </div>
+
+        {allPatients.length === 0 && (
+      <div className="text-center py-8">
+        <div className="text-gray-500">No patients added yet</div>
+      </div>
+    )}
+
       </div>
     </div>
     </>

@@ -15,20 +15,6 @@ import MedicationAssignSkeleton from "@/src/components/skeleton/MedicationAssign
 import { createMedicationAssignApi } from "@/src/lib/api/client/medicationAssign/medicationAssignHandler";
 import toast from "react-hot-toast";
 
-// Define types
-interface Patient {
-  id: string;
-  name: string;
-  age: number;
-  mrn: string;
-}
-
-interface Medication {
-  id: string;
-  name: string;
-  dosage: string;
-  type: string;
-}
 
 const MedicationAssignmentForm = () => {
   
@@ -44,19 +30,30 @@ const MedicationAssignmentForm = () => {
 
   const fetchAll=async()=>{
 
-   const resAllMedicine=await getAllMedicationApi()
 
-   if(resAllMedicine.success){
-    setAllMedication(resAllMedicine.data)
-   }
+    try{
 
-   const resAllPatient=await getAllPatientApi()
+          const resAllMedicine=await getAllMedicationApi()
 
-   if(resAllPatient.success){
-    setAllPatients(resAllPatient.data)
-   }
+          if(resAllMedicine.success){
+                setAllMedication(resAllMedicine.data)
+            }
 
-   setLoader(true)
+          const resAllPatient=await getAllPatientApi()
+
+          if(resAllPatient.success){
+                setAllPatients(resAllPatient.data)
+            }
+
+
+    }catch(error){
+        console.log(error)
+        toast.error("something went wrong , try again later")
+    }finally{
+        setLoader(true)
+    }
+
+   
 
 
   }
@@ -97,8 +94,7 @@ const MedicationAssignmentForm = () => {
   const handleSubmit=async(values:medicationAssignFormValuesType,formikHelpers:FormikHelpers<medicationAssignFormValuesType>)=>{
 
 
-    console.log("got teh submited dataaaaaaaaa")
-    console.log(values)
+    setIsSubmitting(true)
 
     try{
 
@@ -122,6 +118,8 @@ const MedicationAssignmentForm = () => {
     }catch(error){
       console.log(error)
       toast.error("something went wrong , try again later")
+    }finally{
+      setIsSubmitting(false)
     }
     
 

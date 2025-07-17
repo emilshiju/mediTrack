@@ -31,5 +31,6 @@ export interface AssignedMedicationType {
 export type ListingModalProps = {
   data: AssignedMedicationType[];
   close: () => void;
+  deleteAssign: (id: string) => Promise<boolean | undefined>
   name:string|null
 };

@@ -3,14 +3,13 @@ import { AssignedMedicationType } from "@/src/types/components/medicationAssign/
 
 
 import { Eye, User, Calendar, Users, Pill, X, Clock, Trash2 } from 'lucide-react';
+import toast from "react-hot-toast";
 
 
 
 
 
-
-
-const ListingModal=({ data, close ,name }: ListingModalProps)=>{
+const ListingModal=({ data, close ,name ,deleteAssign }: ListingModalProps)=>{
 
 
   const getMedicationStatus = (remainingDays: number, status: 'upcoming' | 'active' | 'finished') => {
@@ -34,13 +33,27 @@ const ListingModal=({ data, close ,name }: ListingModalProps)=>{
 };
 
 
+const handleDelete=async(id:string)=>{
+
+ const status=await  deleteAssign(id)
+
+if(status){
+
+  
+
+
+}
+
+}
+
+
 
     return (
 
 
         <div 
             className="fixed inset-0 bg-black/50 z-[85] pointer-events-auto"
-            onClick={close}
+            // onClick={close}
           >
 
           <div className="fixed inset-0 z-[90] overflow-y-auto">
@@ -151,7 +164,7 @@ const ListingModal=({ data, close ,name }: ListingModalProps)=>{
                                 </td>
                               <td className="px-6 py-4 whitespace-nowrap">
   <button
-    // onClick={() => handleDelete(medication.id)}
+    onClick={() => handleDelete(medication.id)}
     className="p-2 text-red-600 hover:text-white hover:bg-red-600 rounded-md transition-all"
     title="Delete medication"
   >

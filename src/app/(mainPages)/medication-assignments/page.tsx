@@ -10,7 +10,7 @@ import { getAllPatientApi } from '@/src/lib/api/client/patients/patientsHandler'
 import { PatientResType } from '@/src/types/components/patients/patients';
 import ListMedicationAssignSkeleton from '@/src/components/skeleton/ListMedicationAssignSkeleton';
 import toast from 'react-hot-toast';
-import { findAssignedMedicationsApi } from '@/src/lib/api/client/medicationAssign/medicationAssignHandler';
+import { deleteAssignedMedicationApi, findAssignedMedicationsApi } from '@/src/lib/api/client/medicationAssign/medicationAssignHandler';
 import { AssignedMedicationType } from '@/src/types/components/medicationAssign/medicationAssign';
 import ListingModal from '@/src/components/ui/listingModal';
 
@@ -71,9 +71,11 @@ const PatientManagement = () => {
       console.log(error)
       toast.error("something went wrong , try again later")
 
+    }finally{
+      setIsModalOpen(true);
     }
 
-     setIsModalOpen(true);
+     
   }
 
 
@@ -138,6 +140,46 @@ const PatientManagement = () => {
 
 
    
+
+  const handleDelete=async(id:string)=>{
+
+     
+
+    try{
+
+      const resDeleted=await deleteAssignedMedicationApi(id)
+
+      if(resDeleted.success){
+        toast.success(resDeleted.message)
+
+        const filtered=patientAssignedMedication.filter((a,b)=>{
+          if(a.id!==id){
+            return a
+          }
+        })
+
+        setPatientAssignedMedications(filtered)
+
+        return true
+      }
+      if(!resDeleted.success){
+        toast.error(resDeleted.message)
+        return false
+      }
+
+    }catch(error){
+
+      console.log(error)
+      toast.error("something went wrong , try again later")
+      return false
+
+    }
+
+   
+
+  }
+
+
 
    if(!showLoader){
     return <><ListMedicationAssignSkeleton /></>
@@ -294,7 +336,7 @@ const PatientManagement = () => {
 {isModalOpen && patientAssignedMedication&& (
   
         <>
-        <ListingModal  data={patientAssignedMedication} close={handleCloseModal} name={namePatient}   />
+        <ListingModal  data={patientAssignedMedication} close={handleCloseModal} name={namePatient} deleteAssign={handleDelete}   />
           
         </>
       )}

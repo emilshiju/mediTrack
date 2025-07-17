@@ -60,3 +60,35 @@ export const findAssignedMedicationsApi=async(id:string)=>{
   }
 
 }
+
+
+
+
+
+export const deleteAssignedMedicationApi=async(id:string)=>{
+
+
+  try{
+
+    const resDeleteAssignedMedicationApi:resCustomType=await axiosClient.delete(`/medication-assign/${id}`)
+
+     return {
+          
+      success:resDeleteAssignedMedicationApi.success,
+      data:resDeleteAssignedMedicationApi.data,
+      message:resDeleteAssignedMedicationApi.message,
+      statusCode:resDeleteAssignedMedicationApi.statusCode,
+    
+        }
+
+
+  }catch(error){
+
+     console.log(error)
+          const data=getApiErrorMessage(error)
+          return { success:false, message: data };
+
+  }
+
+
+}

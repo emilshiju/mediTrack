@@ -34,17 +34,17 @@ const navItems: NavItem[] = [
   {
     icon: <ListIcon />,
     name: "medication assignments",
-    subItems: [{ name: "list", path: "/medication-assignments", pro: false },{ name: "Add", path: "/medication-assignments/add", pro: false }],
+    subItems: [{ name: "Add", path: "/medication-assignments/add", pro: false },{ name: "list", path: "/medication-assignments", pro: false },],
   },
   {
     icon: <UserCircleIcon />,
     name: "Patients",
-    subItems: [{ name: "Add", path: "/patients", pro: false }],
+    subItems: [{ name: "Add", path: "/patients", pro: false },{ name: "List", path: "/patients/list", pro: false },],
   },
   {
     icon:<Pill /> ,
     name: "Medications",
-    subItems: [{ name: "Add", path: "/medications", pro: false },],
+    subItems: [{ name: "Add", path: "/medications", pro: false },{ name: "List", path: "/medications/list", pro: false }],
   },
 
   {

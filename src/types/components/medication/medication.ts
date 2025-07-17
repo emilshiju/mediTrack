@@ -10,7 +10,7 @@ export interface MedicationType  {
 
 
 export interface MedicationResType{
- id: number;
+ id: string;
   name: string;
   dosage: string;
   frequency: string;

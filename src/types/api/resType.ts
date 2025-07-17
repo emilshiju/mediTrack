@@ -13,7 +13,8 @@ export type ApiErrorResponse = {
 export const getApiErrorMessage = (error: unknown): string => {
   
   if (axios.isAxiosError<ApiErrorResponse>(error)) {
-    return error.response?.data?.message || "Something went wrong."
+    console.log(error.response?.data?.message)
+    return  "Something went wrong."
   }
 
   if (error instanceof Error) {

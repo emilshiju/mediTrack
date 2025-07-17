@@ -66,3 +66,110 @@ export const getAllMedicationApi=async()=>{
 
   }
 }
+
+
+
+
+
+export const getMedicationApi=async(id:string)=>{
+
+  try{
+    
+    const resMedicationApi:resCustomType=await axiosClient.get(`/medications/${id}`)
+
+
+      return {
+          
+      success: resMedicationApi.success,
+      data:resMedicationApi.data,
+      message:resMedicationApi.message,
+      statusCode: resMedicationApi.statusCode,
+    
+        }
+
+
+  }catch(error){
+
+    const data=getApiErrorMessage(error)
+
+        return {
+          success:false,
+          message: data
+        };
+
+  }
+
+  
+}
+
+
+
+
+
+
+export const updateMedicationApi=async(id:string,values:MedicationType)=>{
+
+  try{
+
+
+     const resUpateMedicationApi:resCustomType=await axiosClient.patch(`/medications/${id}`,values)
+
+
+      return {
+          
+      success:resUpateMedicationApi.success,
+      data:resUpateMedicationApi.data,
+      message:resUpateMedicationApi.message,
+      statusCode:resUpateMedicationApi.statusCode,
+    
+        }
+
+
+  }catch(error){
+
+    const data=getApiErrorMessage(error)
+
+        return {
+          success:false,
+          message: data
+        };
+
+  }
+
+}
+
+
+
+
+
+
+export const deleteMedicationApi=async(id:string)=>{
+
+  try{
+
+    const resDeleteMedicationApi:resCustomType=await axiosClient.delete(`/medications/${id}`)
+  console.log("vau",resDeleteMedicationApi.data)
+
+
+     return {
+          
+      success:resDeleteMedicationApi.success,
+      data:resDeleteMedicationApi.data,
+      message:resDeleteMedicationApi.message,
+      statusCode:resDeleteMedicationApi.statusCode,
+    
+        }
+
+
+  }catch(error){
+    console.log(error)
+    const data=getApiErrorMessage(error)
+
+    return {
+          success:false,
+          message: data
+        };
+
+  }
+
+}

@@ -31,24 +31,7 @@ interface Medication {
 }
 
 const MedicationAssignmentForm = () => {
-  // Sample data
-  const patients: Patient[] = [
-    { id: "1", name: "John Smith", age: 45, mrn: "MRN001" },
-    { id: "2", name: "Sarah Johnson", age: 32, mrn: "MRN002" },
-    { id: "3", name: "Michael Brown", age: 58, mrn: "MRN003" },
-    { id: "4", name: "Emily Davis", age: 29, mrn: "MRN004" },
-    { id: "5", name: "Robert Wilson", age: 67, mrn: "MRN005" },
-  ];
-
-  const medications: Medication[] = [
-    { id: "1", name: "Amoxicillin", dosage: "500mg", type: "Antibiotic" },
-    { id: "2", name: "Lisinopril", dosage: "10mg", type: "ACE Inhibitor" },
-    { id: "3", name: "Metformin", dosage: "1000mg", type: "Diabetes" },
-    { id: "4", name: "Atorvastatin", dosage: "20mg", type: "Statin" },
-    { id: "5", name: "Omeprazole", dosage: "20mg", type: "PPI" },
-    { id: "6", name: "Aspirin", dosage: "81mg", type: "Antiplatelet" },
-  ];
-
+  
 
   const [allPatients,setAllPatients]=useState<PatientResType[]>([])
 
@@ -121,8 +104,15 @@ const MedicationAssignmentForm = () => {
 
        const response=await createMedicationAssignApi(values)
 
-       if(response.success){
+       
+
+       if(response.success&&response.data.status==true){
+        formikHelpers.resetForm()
         toast.success(response.message)
+       }
+
+       if(response.success&&response.data.status==false){
+        toast.error(response.message)
        }
 
        if(!response.success){

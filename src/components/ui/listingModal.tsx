@@ -2,7 +2,7 @@ import { ListingModalProps } from "@/src/types/components/medicationAssign/medic
 import { AssignedMedicationType } from "@/src/types/components/medicationAssign/medicationAssign";
 
 
-import { Eye, User, Calendar, Users, Pill, X, Clock } from 'lucide-react';
+import { Eye, User, Calendar, Users, Pill, X, Clock, Trash2 } from 'lucide-react';
 
 
 
@@ -107,6 +107,9 @@ const ListingModal=({ data, close ,name }: ListingModalProps)=>{
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               Days Remaining
                             </th>
+                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Delete
+                            </th>
                           </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
@@ -146,6 +149,15 @@ const ListingModal=({ data, close ,name }: ListingModalProps)=>{
                                     {getMedicationStatus(medication.remainingDays,medication.status).text}
                                   </span>
                                 </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+  <button
+    // onClick={() => handleDelete(medication.id)}
+    className="p-2 text-red-600 hover:text-white hover:bg-red-600 rounded-md transition-all"
+    title="Delete medication"
+  >
+    <Trash2 className="h-4 w-4" />
+  </button>
+</td>
                               </tr>
                             );
                           })}

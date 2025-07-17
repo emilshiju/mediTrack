@@ -16,6 +16,7 @@ import { createMedicationAssignApi } from "@/src/lib/api/client/medicationAssign
 import toast from "react-hot-toast";
 
 
+
 const MedicationAssignmentForm = () => {
   
 
@@ -80,7 +81,7 @@ const MedicationAssignmentForm = () => {
 
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+  
 
 
   const initialValues: medicationAssignFormValuesType = {
@@ -156,11 +157,7 @@ const MedicationAssignmentForm = () => {
 
       {/* Form */}
       <div className="p-6">
-        {successMessage && (
-          <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-md">
-            {successMessage}
-          </div>
-        )}
+       
 
 <Formik
           initialValues={initialValues}
@@ -232,7 +229,7 @@ const MedicationAssignmentForm = () => {
               <CalendarDays className="h-4 w-4 text-blue-500" />
               Start Date
             </label>
-            <div className="relative">
+            <div className="relative" >
               <Field
                 type="date"
                 name="startDate"

@@ -1,12 +1,12 @@
 "use client"
-import { useState } from 'react';
-import { format } from 'date-fns';
+import { useState ,useRef} from 'react';
 import { UserPlus, Check } from 'lucide-react';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import patientSchema from '@/src/util/validations/patientScehma';
 import { PatientType } from '@/src/types/components/patients/patients';
 import { createPatientApi } from '@/src/lib/api/client/patients/patientsHandler';
 import toast from 'react-hot-toast';
+import { CalendarIcon  } from "lucide-react";
 
 export default function PatientForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,6 +15,16 @@ export default function PatientForm() {
     name: '',
     dateOfBirth: ''
   };
+
+  const dateInputRef = useRef<HTMLInputElement>(null);
+
+  const handleCalenderClick=()=>{
+     if (dateInputRef.current?.showPicker) {
+      dateInputRef.current.showPicker();
+    }
+  }
+
+
 
   const handleSubmit = async (values: PatientType,formikHelpers:FormikHelpers<PatientType>) => {
     
@@ -90,7 +100,32 @@ export default function PatientForm() {
               </div>
 
               {/* Date of Birth Field */}
-              <div className="space-y-2">
+
+              {/* Date of Birth Field */}
+<div className="space-y-2">
+  <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700">
+    Date of Birth *
+  </label>
+  <div className="relative">
+    <Field
+      id="dateOfBirth"
+      name="dateOfBirth"
+      type="date"
+      onChange={handleChange}
+      ref={dateInputRef}
+      className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
+        errors.dateOfBirth && touched.dateOfBirth ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+      }`}
+    />
+    <CalendarIcon 
+      className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 cursor-pointer" 
+      onClick={handleCalenderClick} 
+    />
+  </div>
+  <ErrorMessage name="dateOfBirth" component="p" className="text-sm text-red-600 mt-1" />
+</div>
+
+              {/* <div className="space-y-2">
                 <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700">
                   Date of Birth *
                 </label>
@@ -100,19 +135,19 @@ export default function PatientForm() {
                   type="date"
                   values={values.dateOfBirth}
                   onChange={handleChange}
-                  onBlur={handleBlur}
-                   onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {  
-    if (!/[0-9/-]/.test(e.key) && e.key !== "Backspace") {
-      e.preventDefault();
-    }
-  }}
+                  ref={dateInputRef}
+          
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
                     errors.dateOfBirth && touched.dateOfBirth ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
                   }`}
                 />
+                <CalendarIcon className="absolute right-3 top-3.5 h-5 w-5 text-gray-400 " onClick={handleCalenderClick} />
                
                 <ErrorMessage name="dateOfBirth" component="p" className="text-sm text-red-600 mt-1" />
-              </div>
+              </div> */}
+
+
+
 
               {/* Submit Button */}
               <button

@@ -7,25 +7,14 @@ import { deletePatientApi, getAllPatientApi } from '@/src/lib/api/client/patient
 import { useRouter } from "next/navigation";
 import Loader from '@/src/components/ui/Loader';
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  dob: string; // Date of birth in YYYY-MM-DD format
-}
+
 
 
 export default function UserTable() {
   
     const router = useRouter();
 
-  const [users, setUsers] = useState<User[]>([
-    { id: 1, name: 'John Doe', email: 'john@example.com', dob: '1990-05-15' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', dob: '1985-08-22' },
-    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', dob: '1995-03-10' },
-    
-  ]);
-
+  
 
   const [showLoading,setLoading]=useState(false)
 

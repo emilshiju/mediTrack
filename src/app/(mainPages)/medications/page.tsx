@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import { Pill } from 'lucide-react';
-import * as Yup from 'yup';
 import { MedicationType } from '@/src/types/components/medication/medication';
 import medicationSchema from '@/src/util/validations/medicationScehma';
 import { createMedicationApi } from '@/src/lib/api/client/medication/medicationHandler';
@@ -27,11 +26,15 @@ export default function MedicationForm() {
 
       const response=await  createMedicationApi(values)
 
-      
 
-      if(response.success){
+
+      if(response.success&&response.data.status){
         toast.success(response.message)
         formikHelpers.resetForm()
+      }
+
+      if(response.success&&response.data.status==false){
+        toast.error(response.message)
       }
 
        if(!response.success){

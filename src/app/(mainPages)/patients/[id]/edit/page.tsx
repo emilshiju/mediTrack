@@ -4,7 +4,7 @@ import { UserPlus, Check } from 'lucide-react';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import patientSchema from '@/src/util/validations/patientScehma';
 import { PatientResType, PatientType } from '@/src/types/components/patients/patients';
-import { createPatientApi, getPatientApi, updatePatientApi } from '@/src/lib/api/client/patients/patientsHandler';
+import { getPatientApi, updatePatientApi } from '@/src/lib/api/client/patients/patientsHandler';
 import toast from 'react-hot-toast';
 import { useRouter } from "next/navigation";
 

@@ -1,7 +1,4 @@
 
-
-
-
 "use client"
 
 import React, { useState, useEffect } from 'react';
@@ -95,6 +92,8 @@ const PatientManagement = () => {
       document.body.style.overflow = 'auto';
     };
   }, [isModalOpen]);
+
+
 
   // Calculate patient age
   const calculateAge = (dateOfBirth: string): number => {

@@ -60,8 +60,7 @@ const MedicationTable = () => {
 
         const resdeleted=await deleteMedicationApi(id)
 
-        console.log("got resssssss")
-        console.log(resdeleted)
+       
 
         if(resdeleted.success&&resdeleted.data.status){
           fetchAllMedication()

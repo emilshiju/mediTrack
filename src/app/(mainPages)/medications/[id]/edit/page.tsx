@@ -1,106 +1,86 @@
 "use client";
-import { useState ,use, useEffect } from 'react';
+import { useState, use, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
-import { Pill } from 'lucide-react';
-import { MedicationResType, MedicationType } from '@/src/types/components/medication/medication';
-import medicationSchema from '@/src/util/validations/medicationScehma';
-import {  getMedicationApi, updateMedicationApi } from '@/src/lib/api/client/medication/medicationHandler';
-import toast from 'react-hot-toast';
-
+import { Pill } from "lucide-react";
+import {
+  MedicationResType,
+  MedicationType,
+} from "@/src/types/components/medication/medication";
+import medicationSchema from "@/src/util/validations/medicationScehma";
+import {
+  getMedicationApi,
+  updateMedicationApi,
+} from "@/src/lib/api/client/medication/medicationHandler";
+import toast from "react-hot-toast";
 
 import { useRouter } from "next/navigation";
 
-
-export default function MedicationEditForm({params }: {params: Promise<{ id: string }>}) {
-
+export default function MedicationEditForm({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = use(params);
-    
- 
 
-   const router = useRouter();
+  const router = useRouter();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  
-
-  const [medicationDetails,setMedicationDetails]=useState<MedicationResType|null>(null)
+  const [medicationDetails, setMedicationDetails] =
+    useState<MedicationResType | null>(null);
 
   const initialValues: MedicationType = {
-    name:medicationDetails?.name|| '',
-    dosage:medicationDetails?.dosage|| '',
-    frequency:medicationDetails?.frequency||''
+    name: medicationDetails?.name || "",
+    dosage: medicationDetails?.dosage || "",
+    frequency: medicationDetails?.frequency || "",
   };
 
-
-
-  const fetchMedicationsDetails=async()=>{
-
-    try{
-
-      const resAllMedicine=await getMedicationApi(id)
-      
-         if(resAllMedicine.success){
-          setMedicationDetails(resAllMedicine.data)
-         }
-
-         if(!resAllMedicine.success){
-          toast.error(resAllMedicine.message)
-         }
-
-
-    }catch(error){
-
-      console.log(error)
-      toast.error("something went wrong , try again later")
-
-    }
-
-  }
-
-
-
-  useEffect(()=>{
-    fetchMedicationsDetails()
-  },[])
-
-
-  const handleSubmit = async (values: MedicationType, formikHelpers:FormikHelpers<MedicationType>) => {
-
-    setIsSubmitting(true);
-    
-  
+  const fetchMedicationsDetails = async () => {
     try {
+      const resAllMedicine = await getMedicationApi(id);
 
-      const response=await  updateMedicationApi(id,values)
+      if (resAllMedicine.success) {
+        setMedicationDetails(resAllMedicine.data);
+      }
 
-    
-      if(response.success){
-        toast.success(response.message)
-        setMedicationDetails(null)
+      if (!resAllMedicine.success) {
+        toast.error(resAllMedicine.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong , try again later");
+    }
+  };
+
+  useEffect(() => {
+    fetchMedicationsDetails();
+  }, []);
+
+  const handleSubmit = async (
+    values: MedicationType,
+    formikHelpers: FormikHelpers<MedicationType>
+  ) => {
+    setIsSubmitting(true);
+
+    try {
+      const response = await updateMedicationApi(id, values);
+
+      if (response.success) {
+        toast.success(response.message);
+        setMedicationDetails(null);
         router.push(`/medications/list`);
       }
 
-
-       if(!response.success){
-        toast.error(response.message)
+      if (!response.success) {
+        toast.error(response.message);
       }
-
-
-      // Handle form submission here
-      console.log(values);
-
-    }catch(error){
-
-        console.log(error)
-        toast.error("something went wrong , try again later")
-      
-    }
-     finally {
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong , try again later");
+    } finally {
       setIsSubmitting(false);
     }
-
   };
-
 
   return (
     <div className="w-full max-w-md mx-auto mt-10 shadow-xl rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-sm overflow-hidden">
@@ -111,14 +91,16 @@ export default function MedicationEditForm({params }: {params: Promise<{ id: str
             <Pill className="h-5 w-5 text-blue-600" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Medication Information</h2>
+            <h2 className="text-2xl font-bold text-gray-900">
+              Medication Information
+            </h2>
             <p className="text-gray-600 text-sm mt-1">
               Add medication details for the patient
             </p>
           </div>
         </div>
       </div>
-      
+
       {/* Form */}
       <div className="px-6 py-4">
         <Formik
@@ -131,7 +113,10 @@ export default function MedicationEditForm({params }: {params: Promise<{ id: str
             <Form className="space-y-5" noValidate>
               {/* Medication Name Field */}
               <div className="space-y-2">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Medication Name *
                 </label>
                 <Field
@@ -140,15 +125,24 @@ export default function MedicationEditForm({params }: {params: Promise<{ id: str
                   type="text"
                   placeholder="e.g., Ibuprofen, Amoxicillin"
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                    errors.name && touched.name ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+                    errors.name && touched.name
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300"
                   }`}
                 />
-                <ErrorMessage name="name" component="p" className="text-sm text-red-600 mt-1" />
+                <ErrorMessage
+                  name="name"
+                  component="p"
+                  className="text-sm text-red-600 mt-1"
+                />
               </div>
 
               {/* Dosage Field */}
               <div className="space-y-2">
-                <label htmlFor="dosage" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="dosage"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Dosage *
                 </label>
                 <Field
@@ -157,15 +151,24 @@ export default function MedicationEditForm({params }: {params: Promise<{ id: str
                   type="text"
                   placeholder="e.g., 500mg, 10ml"
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                    errors.dosage && touched.dosage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+                    errors.dosage && touched.dosage
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300"
                   }`}
                 />
-                <ErrorMessage name="dosage" component="p" className="text-sm text-red-600 mt-1" />
+                <ErrorMessage
+                  name="dosage"
+                  component="p"
+                  className="text-sm text-red-600 mt-1"
+                />
               </div>
 
               {/* Frequency Field */}
               <div className="space-y-2">
-                <label htmlFor="frequency" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="frequency"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Frequency *
                 </label>
                 <Field
@@ -173,7 +176,9 @@ export default function MedicationEditForm({params }: {params: Promise<{ id: str
                   id="frequency"
                   name="frequency"
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                    errors.frequency && touched.frequency ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+                    errors.frequency && touched.frequency
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300"
                   }`}
                 >
                   <option value="">Select frequency</option>
@@ -186,7 +191,11 @@ export default function MedicationEditForm({params }: {params: Promise<{ id: str
                   <option value="Every 8 hours">Every 8 hours</option>
                   <option value="As needed">As needed</option>
                 </Field>
-                <ErrorMessage name="frequency" component="p" className="text-sm text-red-600 mt-1" />
+                <ErrorMessage
+                  name="frequency"
+                  component="p"
+                  className="text-sm text-red-600 mt-1"
+                />
               </div>
 
               {/* Submit Button */}

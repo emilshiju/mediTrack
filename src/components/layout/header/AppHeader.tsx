@@ -1,7 +1,7 @@
 "use client";
 import UserDropdown from "./UserDropdown";
 import { useSidebar } from "@/src/context/sidebar-context";
-import React, { useState ,useEffect,useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
@@ -79,8 +79,6 @@ const AppHeader: React.FC = () => {
             {/* Cross Icon */}
           </button>
 
-          
-
           <button
             onClick={toggleApplicationMenu}
             className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg z-80 hover:bg-gray-100  lg:hidden"
@@ -100,22 +98,15 @@ const AppHeader: React.FC = () => {
               />
             </svg>
           </button>
-
-         
-
-
         </div>
         <div
           className={`${
             isApplicationMenuOpen ? "flex" : "hidden"
           } items-center justify-between w-full gap-4 px-5 py-4 lg:flex shadow-theme-md lg:justify-end lg:px-0 lg:shadow-none`}
         >
-          <div className="flex items-center gap-2 2xsm:gap-3">
-            
-          </div>
+          <div className="flex items-center gap-2 2xsm:gap-3"></div>
           {/* <!-- User Area --> */}
-          <UserDropdown /> 
-    
+          <UserDropdown />
         </div>
       </div>
     </header>

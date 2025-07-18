@@ -1,57 +1,53 @@
-"use client"
-import { useState ,useRef} from 'react';
-import { UserPlus, Check } from 'lucide-react';
+"use client";
+import { useState, useRef } from "react";
+import { UserPlus, Check } from "lucide-react";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
-import patientSchema from '@/src/util/validations/patientScehma';
-import { PatientType } from '@/src/types/components/patients/patients';
-import { createPatientApi } from '@/src/lib/api/client/patients/patientsHandler';
-import toast from 'react-hot-toast';
-import { CalendarIcon  } from "lucide-react";
+import patientSchema from "@/src/util/validations/patientScehma";
+import { PatientType } from "@/src/types/components/patients/patients";
+import { createPatientApi } from "@/src/lib/api/client/patients/patientsHandler";
+import toast from "react-hot-toast";
+import { CalendarIcon } from "lucide-react";
 
 export default function PatientForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const initialValues: PatientType = {
-    name: '',
-    dateOfBirth: ''
+    name: "",
+    dateOfBirth: "",
   };
 
   const dateInputRef = useRef<HTMLInputElement>(null);
 
-  const handleCalenderClick=()=>{
-     if (dateInputRef.current?.showPicker) {
+  const handleCalenderClick = () => {
+    if (dateInputRef.current?.showPicker) {
       dateInputRef.current.showPicker();
     }
-  }
+  };
 
-
-
-  const handleSubmit = async (values: PatientType,formikHelpers:FormikHelpers<PatientType>) => {
-    
+  const handleSubmit = async (
+    values: PatientType,
+    formikHelpers: FormikHelpers<PatientType>
+  ) => {
     setIsSubmitting(true);
 
-   
     try {
+      const response = await createPatientApi(values);
 
-       const response =await  createPatientApi(values)
-
-       if(response.success){
-        toast.success(response.message)
-        formikHelpers.resetForm()
+      if (response.success) {
+        toast.success(response.message);
+        formikHelpers.resetForm();
       }
 
-       if(!response.success){
-        toast.error(response.message)
+      if (!response.success) {
+        toast.error(response.message);
       }
 
       // Handle form submission here
       console.log(values);
-    }catch(error){
-      console.log(error)
-      toast.error("something went wrong , try again later")
-
-    } 
-    finally {
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong , try again later");
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -65,14 +61,16 @@ export default function PatientForm() {
             <UserPlus className="h-5 w-5 text-blue-600" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Patient Registration</h2>
+            <h2 className="text-2xl font-bold text-gray-900">
+              Patient Registration
+            </h2>
             <p className="text-gray-600 text-sm mt-1">
               Enter patient information to create a new record
             </p>
           </div>
         </div>
       </div>
-      
+
       {/* Form */}
       <div className="px-6 py-4">
         <Formik
@@ -80,11 +78,21 @@ export default function PatientForm() {
           validationSchema={patientSchema}
           onSubmit={handleSubmit}
         >
-          {({ values , handleChange, handleBlur ,setFieldValue,errors, touched }) => (
-            <Form className="space-y-5"  noValidate>
+          {({
+            values,
+            handleChange,
+            handleBlur,
+            setFieldValue,
+            errors,
+            touched,
+          }) => (
+            <Form className="space-y-5" noValidate>
               {/* Name Field */}
               <div className="space-y-2">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Patient Name *
                 </label>
                 <Field
@@ -93,61 +101,50 @@ export default function PatientForm() {
                   type="text"
                   placeholder="Enter full name"
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                    errors.name && touched.name ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+                    errors.name && touched.name
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300"
                   }`}
                 />
-                <ErrorMessage name="name" component="p" className="text-sm text-red-600 mt-1" />
+                <ErrorMessage
+                  name="name"
+                  component="p"
+                  className="text-sm text-red-600 mt-1"
+                />
               </div>
 
               {/* Date of Birth Field */}
-
-              {/* Date of Birth Field */}
-<div className="space-y-2">
-  <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700">
-    Date of Birth *
-  </label>
-  <div className="relative">
-    <Field
-      id="dateOfBirth"
-      name="dateOfBirth"
-      type="date"
-      onChange={handleChange}
-      ref={dateInputRef}
-      className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-        errors.dateOfBirth && touched.dateOfBirth ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
-      }`}
-    />
-    <CalendarIcon 
-      className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 cursor-pointer" 
-      onClick={handleCalenderClick} 
-    />
-  </div>
-  <ErrorMessage name="dateOfBirth" component="p" className="text-sm text-red-600 mt-1" />
-</div>
-
-              {/* <div className="space-y-2">
-                <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700">
+              <div className="space-y-2">
+                <label
+                  htmlFor="dateOfBirth"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Date of Birth *
                 </label>
-                <Field
-                  id="dateOfBirth"
+                <div className="relative">
+                  <Field
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    type="date"
+                    onChange={handleChange}
+                    ref={dateInputRef}
+                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
+                      errors.dateOfBirth && touched.dateOfBirth
+                        ? "border-red-500 focus:ring-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
+                  <CalendarIcon
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 cursor-pointer"
+                    onClick={handleCalenderClick}
+                  />
+                </div>
+                <ErrorMessage
                   name="dateOfBirth"
-                  type="date"
-                  values={values.dateOfBirth}
-                  onChange={handleChange}
-                  ref={dateInputRef}
-          
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                    errors.dateOfBirth && touched.dateOfBirth ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
-                  }`}
+                  component="p"
+                  className="text-sm text-red-600 mt-1"
                 />
-                <CalendarIcon className="absolute right-3 top-3.5 h-5 w-5 text-gray-400 " onClick={handleCalenderClick} />
-               
-                <ErrorMessage name="dateOfBirth" component="p" className="text-sm text-red-600 mt-1" />
-              </div> */}
-
-
-
+              </div>
 
               {/* Submit Button */}
               <button

@@ -1,11 +1,6 @@
 import { ListingModalProps } from "@/src/types/components/medicationAssign/medicationAssign";
 import { AssignedMedicationType } from "@/src/types/components/medicationAssign/medicationAssign";
-
-
 import { Eye, User, Calendar, Users, Pill, X, Clock, Trash2 } from 'lucide-react';
-import toast from "react-hot-toast";
-
-
 
 
 
@@ -37,12 +32,6 @@ const handleDelete=async(id:string)=>{
 
  const status=await  deleteAssign(id)
 
-if(status){
-
-  
-
-
-}
 
 }
 
@@ -85,7 +74,7 @@ if(status){
                   <div className="mb-4">
                     <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                       <Pill className="w-5 h-5 mr-2 text-blue-600" />
-                      {/* Medications ({selectedPatient.medications.length}) */}
+                   
                       Medications ({data.length})
                     </h3>
                   </div>
@@ -127,7 +116,7 @@ if(status){
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
                           {data.map((medication:AssignedMedicationType) => {
-                            // const remainingDays = calculateRemainingDays(medication.medication);
+                            
                             return (
                               <tr key={medication.id} className="hover:bg-gray-50 transition-colors">
                                 <td className="px-6 py-4 whitespace-nowrap">
@@ -158,7 +147,7 @@ if(status){
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getMedicationStatus(medication.remainingDays,medication.status).color}`}>
-                                    {/* {medication.remainingDays === 0 ? 'Completed' : `${medication.remainingDays} days`} */}
+                                    
                                     {getMedicationStatus(medication.remainingDays,medication.status).text}
                                   </span>
                                 </td>

@@ -33,17 +33,20 @@ export default function PatientForm() {
     try {
       const response = await createPatientApi(values);
 
-      if (response.success) {
+      if (response.success&&response.data.status) {
         toast.success(response.message);
         formikHelpers.resetForm();
+      }
+
+      if(response.success&&response.data.status==false){
+        toast.error(response.message);
       }
 
       if (!response.success) {
         toast.error(response.message);
       }
 
-      // Handle form submission here
-      console.log(values);
+    
     } catch (error) {
       console.log(error);
       toast.error("something went wrong , try again later");
@@ -105,6 +108,8 @@ export default function PatientForm() {
                       ? "border-red-500 focus:ring-red-500"
                       : "border-gray-300"
                   }`}
+                  onChange={handleChange}
+                  
                 />
                 <ErrorMessage
                   name="name"

@@ -65,15 +65,21 @@ export default function MedicationEditForm({
     try {
       const response = await updateMedicationApi(id, values);
 
-      if (response.success) {
+      if (response.success&&response.data.status) {
         toast.success(response.message);
         setMedicationDetails(null);
         router.push(`/medications/list`);
       }
 
+      if(response.success&&response.data.status==false){
+        toast.error(response.message)
+      }
+
       if (!response.success) {
         toast.error(response.message);
       }
+
+
     } catch (error) {
       console.log(error);
       toast.error("something went wrong , try again later");

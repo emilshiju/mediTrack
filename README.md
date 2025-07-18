@@ -52,20 +52,19 @@ To provide a seamless experience:
 
 ---
 
-## 🖥️ Getting Started
 
-1. **Clone the repo**
-   
-git clone https://github.com/your-username/meditrack-frontend.git
+
+🚀 Running the Project
+
+
+```bash
+
 cd mediTrack
-
-
-Install Dependencies
 npm install
-
-
-Run the Server
 npm run dev
 
 
+```
+
+Access on http://localhost:3000
 

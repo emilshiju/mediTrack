@@ -1,5 +1,5 @@
 "use client";
-import { useState, use, useEffect } from "react";
+import { useState, use, useEffect,useRef } from "react";
 import { UserPlus, Check } from "lucide-react";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import patientSchema from "@/src/util/validations/patientScehma";
@@ -13,6 +13,7 @@ import {
 } from "@/src/lib/api/client/patients/patientsHandler";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { CalendarIcon } from "lucide-react";
 
 export default function PatientForm({
   params,
@@ -55,6 +56,16 @@ export default function PatientForm({
     dateOfBirth: patientDetails?.dateOfBirth || "",
   };
 
+  const dateInputRef = useRef<HTMLInputElement>(null);
+  
+    const handleCalenderClick = () => {
+      if (dateInputRef.current?.showPicker) {
+        dateInputRef.current.showPicker();
+      }
+    };
+
+
+
   const handleSubmit = async (
     values: PatientType,
     formikHelpers: FormikHelpers<PatientType>
@@ -64,10 +75,14 @@ export default function PatientForm({
     try {
       const response = await updatePatientApi(id, values);
 
-      if (response.success) {
+      if (response.success&&response.data.status) {
         toast.success(response.message);
         setPatientDetails(null);
         router.push(`/patients/list`);
+      }
+
+      if(response.success&&response.data.status==false){
+        toast.error(response.message)
       }
 
       if (!response.success) {
@@ -154,25 +169,24 @@ export default function PatientForm({
                 >
                   Date of Birth *
                 </label>
-                <Field
-                  id="dateOfBirth"
-                  name="dateOfBirth"
-                  type="date"
-                  values={values.dateOfBirth}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                    if (!/[0-9/-]/.test(e.key) && e.key !== "Backspace") {
-                      e.preventDefault();
-                    }
-                  }}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                    errors.dateOfBirth && touched.dateOfBirth
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300"
-                  }`}
-                />
-
+                <div className="relative">
+                  <Field
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    type="date"
+                    onChange={handleChange}
+                    ref={dateInputRef}
+                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
+                      errors.dateOfBirth && touched.dateOfBirth
+                        ? "border-red-500 focus:ring-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
+                  <CalendarIcon
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 cursor-pointer"
+                    onClick={handleCalenderClick}
+                  />
+                </div>
                 <ErrorMessage
                   name="dateOfBirth"
                   component="p"
